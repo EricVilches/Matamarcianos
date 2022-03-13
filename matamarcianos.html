@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+<head>
+<title>MATAMARCIANOS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+</head>
+
+<body>
+<h1>Juego matamarcianos</h1>
+<script>
+
+let game_w = 600;
+let game_h = 400;
+
+let config = {
+	width: game_w,
+	height: game_h,
+	physics: {
+		default: 'acarde',
+		arcade: {
+			debug: true
+			}
+	},
+	scene: {
+		preload: preload,
+		create: create,
+		update: update,
+	}
+}
+
+let game = new Phaser.Game(config);
+
+let cursors;
+
+let player_img;
+let enemy_img;
+let bullet_img;
+let background_img;
+
+let scale_size = 1/2;
+let scale_size_bullet = 1/2;
+let player_speed = 2;
+
+let lives = 3;
+let score = 0;
+
+let lives_txt;
+let score_txt;
+
+//let spawn_enemy = Math.floor(Math.random()*game_h+1);
+
+function preload()
+{
+	this.load.image("fondo_matamarcianos", "fondo_matamarcianos.png");
+	this.load.image("nave", "nave.png");
+	this.load.image("enemigo","enemigo.png");
+	this.load.image("bala_nave", "bala_nave.png");
+}
+
+function create()
+{
+	cursors = this.input.keyboard.createCursorKeys();
+	
+	for (let i = 0; i < 5; i++)
+	{
+		spawn_enemy = Math.floor(Math.random()*game_h+1);	
+	}
+
+	background_img = this.add.image(game_w/2, game_h/2, "fondo_matamarcianos");
+	player_img = this.add.image(32, 200, "nave");
+	bullet_img = this.add.image(1,1, "bala_nave");
+	enemy_img = this.add.image(664, spawn_enemy, "enemigo");
+		
+	
+	
+	
+	this.add.text(game_w/5, 5, "LIVES");
+	lives_txt = this.add.text(game_w/5+64, 5, lives);
+
+	this.add.text(game_w/2, 5, "SCORE");
+	lives_txt = this.add.text(game_w/2+64, 5, score);
+	
+}
+
+
+function update()
+{	
+	if(cursors.up.isDown){
+		player_img.y -= player_speed;
+	}			
+	else if (cursors.down.isDown){
+		player_img.y += player_speed;		
+	}
+	
+	enemy_img.x--;
+
+	player_img.setScale(scale_size);
+	enemy_img.setScale(scale_size);
+	bullet_img.setScale(scale_size_bullet);
+}
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
